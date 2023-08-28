@@ -9,6 +9,7 @@ document.querySelector('.score').textContent = 10;
 
 let secretNumber = Math.trunc(Math.random()*20)+1;
 let score = 20;
+let highscore = 0;
 
 
 
@@ -28,35 +29,30 @@ document.querySelector(".check").addEventListener('click',function(){
     document.querySelector('body').style.backgroundColor='#60b347';
     document.querySelector('.number').style.width='30rem';
 
-  //When the guess is lower
-  }else if(guess< secretNumber){
-    if(score>1){ 
-    document.querySelector('.message').textContent = '🔽 Too low'
-    score--;
-    document.querySelector('.score').textContent = score;}
-
-    //When score reaches 0
-    else {
-      document.querySelector('.message').textContent = '😢 You lost'
-      document.querySelector('.score').textContent = 0;
-      score= 0;
+    if (score > highscore){
+      highscore=score;
+      document.querySelector('.highscore').textContent=highscore;
     }
 
-    //When guess is higher
-  }else if (guess > secretNumber){
+  //When the guess is not correct
+  }else if(guess!=secretNumber){
     if(score>1){ 
-    document.querySelector('.message').textContent = '🔼 Too high'
-    score--;
-    document.querySelector('.score').textContent = score;
+      if(guess<secretNumber){
+        document.querySelector('.message').textContent = '🔽 Too low'
+      }else if(guess>secretNumber){
+        document.querySelector('.message').textContent = '🔼 Too high'
+      }
+      score--;
+      document.querySelector('.score').textContent = score;}
+  
+      //When score reaches 0
+      else {
+        document.querySelector('.message').textContent = '😢 You lost'
+        document.querySelector('.score').textContent = 0;
+        score= 0;
+      }}
 
-    //When score reaches 0
-    }else {
-      document.querySelector('.message').textContent = '😢 You lost'
-      document.querySelector('.score').textContent = 0;
-      score = 0;
-    }
-  }
-});
+  });
 
 document.querySelector(".again").addEventListener('click',function(){
   score=20;
@@ -67,5 +63,5 @@ document.querySelector(".again").addEventListener('click',function(){
   document.querySelector('body').style.backgroundColor='#222';
   document.querySelector('.number').style.width='15rem';
   document.querySelector('.guess').value='';
-  
+
 });
